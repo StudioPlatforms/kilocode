@@ -10,6 +10,7 @@ import { ToolUse, AskApproval, HandleError, PushToolResult, RemoveClosingTag } f
 import { fileExistsAtPath } from "../../utils/fs"
 import { getReadablePath } from "../../utils/path"
 import { getKiloBaseUriFromToken } from "../../shared/kilocode/token"
+import { getKiloUrl } from "../../shared/kilocode/url"
 import { DEFAULT_HEADERS } from "../../api/providers/constants"
 import { TelemetryService } from "@roo-code/telemetry"
 import { type ClineProviderState } from "../webview/ClineProvider"
@@ -360,10 +361,13 @@ function getFastApplyConfiguration(state: ClineProviderState): FastApplyConfigur
 		if (!token) {
 			return { available: false, error: "No KiloCode token available to use Fast Apply" }
 		}
+		const baseUrl = getKiloBaseUriFromToken(token)
+		const url = getKiloUrl(`${baseUrl}/api/openrouter/`)
+
 		return {
 			available: true,
 			apiKey: token,
-			baseUrl: `${getKiloBaseUriFromToken(token)}/api/openrouter/`,
+			baseUrl: url,
 			model: selectedModel === "auto" ? "morph/morph-v3-large" : selectedModel, // Use selected model
 			kiloCodeOrganizationId: state.apiConfiguration.kilocodeOrganizationId,
 		}

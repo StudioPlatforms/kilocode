@@ -1,7 +1,7 @@
 export function getKiloBaseUriFromToken(kilocodeToken?: string) {
 	if (kilocodeToken) {
 		try {
-			const payload_string = kilocodeToken.split(".")[1]
+			const payload_string = kilocodeToken.split(".")[1] ?? ""
 			const payload_json =
 				typeof atob !== "undefined" ? atob(payload_string) : Buffer.from(payload_string, "base64").toString()
 			const payload = JSON.parse(payload_json)
