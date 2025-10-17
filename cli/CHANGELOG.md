@@ -1,5 +1,11 @@
 # @kilocode/cli
 
+## 0.0.5
+
+### Patch Changes
+
+- [#3094](https://github.com/Kilo-Org/kilocode/pull/3094) [`b55f3a8`](https://github.com/Kilo-Org/kilocode/commit/b55f3a8784df8efc1ff5f06d53a7c5998b4794ea) Thanks [@RSO](https://github.com/RSO)! - Rename -ci flag to -a (longform --auto)
+
 ## 0.0.4
 
 ### Patch Changes
