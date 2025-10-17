@@ -19,8 +19,7 @@ import { getGlamaModels } from "./glama"
 import { getUnboundModels } from "./unbound"
 import { getLiteLLMModels } from "./litellm"
 import { GetModelsOptions } from "../../../shared/api"
-import { getKiloBaseUriFromToken } from "../../../shared/kilocode/token"
-import { getKiloUrl } from "../../../shared/kilocode/url"
+import { getKiloUrlFromToken } from "../../../shared/kilocode/token"
 import { getOllamaModels } from "./ollama"
 import { getLMStudioModels } from "./lmstudio"
 import { getIOIntelligenceModels } from "./io-intelligence"
@@ -96,11 +95,10 @@ export const getModels = async (options: GetModelsOptions): Promise<ModelRecord>
 				break
 			// kilocode_change start
 			case "kilocode-openrouter": {
-				const baseUrl = getKiloBaseUriFromToken(options.kilocodeToken ?? "")
 				const path = options.kilocodeOrganizationId
 					? `/api/organizations/${options.kilocodeOrganizationId}`
 					: "/api/openrouter"
-				const url = getKiloUrl(`${baseUrl}${path}`)
+				const url = getKiloUrlFromToken(options.kilocodeToken ?? "", path)
 				models = await getOpenRouterModels({
 					openRouterBaseUrl: url,
 					headers: options.kilocodeToken ? { Authorization: `Bearer ${options.kilocodeToken}` } : undefined,

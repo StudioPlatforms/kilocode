@@ -9,8 +9,7 @@ import { formatResponse } from "../prompts/responses"
 import { ToolUse, AskApproval, HandleError, PushToolResult, RemoveClosingTag } from "../../shared/tools"
 import { fileExistsAtPath } from "../../utils/fs"
 import { getReadablePath } from "../../utils/path"
-import { getKiloBaseUriFromToken } from "../../shared/kilocode/token"
-import { getKiloUrl } from "../../shared/kilocode/url"
+import { getKiloUrlFromToken } from "../../shared/kilocode/token"
 import { DEFAULT_HEADERS } from "../../api/providers/constants"
 import { TelemetryService } from "@roo-code/telemetry"
 import { type ClineProviderState } from "../webview/ClineProvider"
@@ -361,8 +360,7 @@ function getFastApplyConfiguration(state: ClineProviderState): FastApplyConfigur
 		if (!token) {
 			return { available: false, error: "No KiloCode token available to use Fast Apply" }
 		}
-		const baseUrl = getKiloBaseUriFromToken(token)
-		const url = getKiloUrl(`${baseUrl}/api/openrouter/`)
+		const url = getKiloUrlFromToken(token, "https://api.kilocode.ai/api/openrouter/")
 
 		return {
 			available: true,

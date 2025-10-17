@@ -6,7 +6,7 @@ import pWaitFor from "p-wait-for"
 import * as vscode from "vscode"
 // kilocode_change start
 import axios from "axios"
-import { getKiloBaseUriFromToken } from "../../shared/kilocode/token"
+import { getKiloUrlFromToken } from "../../shared/kilocode/token"
 import { getKiloUrl } from "../../shared/kilocode/url"
 import {
 	ProfileData,
@@ -2594,8 +2594,7 @@ export const webviewMessageHandler = async (
 					headers["X-KILOCODE-TESTER"] = "SUPPRESS"
 				}
 
-				const baseUrl = getKiloBaseUriFromToken(kilocodeToken)
-				const url = getKiloUrl(`${baseUrl}/api/profile`)
+				const url = getKiloUrlFromToken(kilocodeToken, "https://api.kilocode.ai/api/profile")
 				const response = await axios.get<Omit<ProfileData, "kilocodeToken">>(url, { headers })
 
 				// Go back to Personal when no longer part of the current set organization
@@ -2691,8 +2690,7 @@ export const webviewMessageHandler = async (
 					headers["X-KILOCODE-TESTER"] = "SUPPRESS"
 				}
 
-				const baseUrl = getKiloBaseUriFromToken(kilocodeToken)
-				const url = getKiloUrl(`${baseUrl}/api/profile/balance`)
+				const url = getKiloUrlFromToken(kilocodeToken, "https://api.kilocode.ai/api/profile/balance")
 				const response = await axios.get(url, { headers })
 				provider.postMessageToWebview({
 					type: "balanceDataResponse", // New response type
@@ -2721,8 +2719,10 @@ export const webviewMessageHandler = async (
 				const uiKind = message.values?.uiKind || "Desktop"
 				const source = uiKind === "Web" ? "web" : uriScheme
 
-				const baseUrl = getKiloBaseUriFromToken(kilocodeToken)
-				const url = getKiloUrl(`${baseUrl}/payments/topup?origin=extension&source=${source}&amount=${credits}`)
+				const url = getKiloUrlFromToken(
+					kilocodeToken,
+					`https://api.kilocode.ai/payments/topup?origin=extension&source=${source}&amount=${credits}`,
+				)
 				const response = await axios.post(
 					url,
 					{},

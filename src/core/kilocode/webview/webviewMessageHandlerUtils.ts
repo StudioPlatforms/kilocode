@@ -5,8 +5,7 @@ import { t } from "../../../i18n"
 import { WebviewMessage } from "../../../shared/WebviewMessage"
 import { Task } from "../../task/Task"
 import axios from "axios"
-import { getKiloBaseUriFromToken } from "../../../shared/kilocode/token"
-import { getKiloUrl } from "../../../shared/kilocode/url"
+import { getKiloUrlFromToken } from "../../../shared/kilocode/token"
 
 // Helper function to delete messages for resending
 const deleteMessagesForResend = async (cline: Task, originalMessageIndex: number, originalMessageTs: number) => {
@@ -96,8 +95,7 @@ export const fetchKilocodeNotificationsHandler = async (provider: ClineProvider)
 			headers["X-KILOCODE-TESTER"] = "SUPPRESS"
 		}
 
-		const baseUrl = getKiloBaseUriFromToken(kilocodeToken)
-		const url = getKiloUrl(`${baseUrl}/api/users/notifications`)
+		const url = getKiloUrlFromToken(kilocodeToken, "https://api.kilocode.ai/api/users/notifications")
 		const response = await axios.get(url, {
 			headers,
 			timeout: 5000,

@@ -13,3 +13,26 @@ export function getKiloBaseUriFromToken(kilocodeToken?: string) {
 	}
 	return "https://api.kilocode.ai"
 }
+
+/**
+ * Helper function that combines token-based base URL resolution with URL construction.
+ * Takes a token and a full URL, uses the token to get the appropriate base URL,
+ * then constructs the final URL by replacing the domain in the target URL.
+ *
+ * @param kilocodeToken The KiloCode authentication token
+ * @param targetUrl The target URL to transform
+ * @returns Fully constructed KiloCode URL with proper backend mapping based on token
+ */
+export function getKiloUrlFromToken(kilocodeToken: string, targetUrl: string): string {
+	const baseUrl = getKiloBaseUriFromToken(kilocodeToken)
+
+	try {
+		const target = new URL(targetUrl)
+		const { protocol, hostname, port } = new URL(baseUrl)
+		Object.assign(target, { protocol, hostname, port })
+		return target.toString()
+	} catch (error) {
+		console.warn("Failed to parse URL in getKiloUrlFromToken:", targetUrl, error)
+		return targetUrl
+	}
+}
