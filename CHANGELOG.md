@@ -1,8 +1,6 @@
 # kilo-code
 
-## 4.106.1
-
-### Patch Changes
+## [v4.106.1]
 
 - [#3082](https://github.com/Kilo-Org/kilocode/pull/3082) [`d82e684`](https://github.com/Kilo-Org/kilocode/commit/d82e6842d423861d7c5725ebfdba491438b3302a) Thanks [@chrarnoldus](https://github.com/chrarnoldus)! - The "Enable browser tool" setting is now honored when using experimental JSON style tool calls.
 
